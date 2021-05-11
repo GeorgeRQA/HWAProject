@@ -1,10 +1,7 @@
 package com.qa.hwa.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import javax.websocket.server.PathParam;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,48 +14,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.hwa.domain.Supermarket;
-import com.qa.hwa.repo.SupermarketRepo;
+import com.qa.hwa.service.SupermarketService;
+
 
 @RestController
 public class SupermarketController {
 	
-private SupermarketRepo repo;
-	
-	public SupermarketController(SupermarketRepo repo) {
-		this.repo = repo; 
-	}
+private SupermarketService service;
 
-	private List<Supermarket> supermarketList = new ArrayList<>();
+	public SupermarketController(SupermarketService service) {
+		this.service = service; 
+	}
 	
 	//Create
 	@PostMapping("/create")
 	public ResponseEntity<Supermarket> addItem(@RequestBody Supermarket supermarket){
-		return new ResponseEntity<Supermarket>(this.repo.save(supermarket),HttpStatus.CREATED);
+		return new ResponseEntity<Supermarket>(this.service.create(supermarket),HttpStatus.CREATED);
 	}
 	
 	//Read all
 	@GetMapping("/getAll")
 	public ResponseEntity<List<Supermarket>> getAll(){
-		return ResponseEntity.ok(this.repo.findAll());
+		return ResponseEntity.ok(this.service.getAll());
 	}
 	
 	//Read one
 	@GetMapping("/getOne/{id}")
-	public ResponseEntity<Optional<Supermarket>> getItemById(@PathVariable Long id) {
-		return ResponseEntity.ok(this.repo.findById(id));
+	public ResponseEntity<Supermarket> getItemById(@PathVariable Long id) {
+		return ResponseEntity.ok(this.service.getOne(id));
 	}
 	
 	//Update
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Optional<Supermarket>> update(@PathParam("name") String name, @PathParam("price") double price, @PathParam("quantity")int quantity, @PathVariable Long id){
-	return ResponseEntity.ok(this.repo.findById(id));
+	public Supermarket update(@PathVariable Long id, @RequestBody Supermarket supermarket){
+		this.service.update(id, supermarket);
+		return this.service.getOne(id);
 	}
 	
 	//Delete
 	@DeleteMapping("/remove/{id}")
-	public boolean removeItem(@PathVariable Long id) {
-		this.repo.deleteById(id);
-		return !this.repo.existsById(id);
+	public Supermarket removeItem(@PathVariable Long id) {
+		this.service.delete(id);
+		return this.service.getOne(id);
 	}
 	
 	
