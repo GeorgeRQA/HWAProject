@@ -130,7 +130,10 @@ public class ServiceTest {
 This test works by Mocking an instance of the SupermarketRepo class and stating what methods called from that class will return. It then runs the create method from the SupermarketService class and asserts that the response is equal to that of the Mocked one.
 
 
-##[Jira Board](https://georgeqa.atlassian.net/secure/RapidBoard.jspa?rapidView=3&view=planning.nodetail&epics=visible&issueLimit=100)
+##Jira Board
+
+*[HWAP Board](https://georgeqa.atlassian.net/secure/RapidBoard.jspa?rapidView=3&view=planning.nodetail&epics=visible&issueLimit=100)
+
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
