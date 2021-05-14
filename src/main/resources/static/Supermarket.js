@@ -75,6 +75,7 @@ axios
     .post('http://localhost:8080/create', newItem)
     .then(function (a) {
         console.log(a);
+        window.location.reload();
       })
       .catch(function (error) {
         console.log(error);

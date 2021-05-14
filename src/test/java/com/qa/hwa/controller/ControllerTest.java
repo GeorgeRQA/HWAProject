@@ -39,17 +39,17 @@ public class ControllerTest {
 
 		Supermarket apple = new Supermarket("apple", 0.99, 10);
 
-		String thorAsJSON = this.mapper.writeValueAsString(apple);
+		String appleAsJSON = this.mapper.writeValueAsString(apple);
 
-		RequestBuilder mockRequest = post("/create").contentType(MediaType.APPLICATION_JSON).content(thorAsJSON);
+		RequestBuilder mockRequest = post("/create").contentType(MediaType.APPLICATION_JSON).content(appleAsJSON);
 
 		Supermarket savedApple = new Supermarket(2L, "apple", 0.99, 10);
 
-		String savedThorAsJSON = this.mapper.writeValueAsString(savedApple);
+		String savedAppleAsJSON = this.mapper.writeValueAsString(savedApple);
 
 		ResultMatcher matchStatus = status().isCreated();
 
-		ResultMatcher matchBody = content().json(savedThorAsJSON);
+		ResultMatcher matchBody = content().json(savedAppleAsJSON);
 
 		this.mockMVC.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
 	}
